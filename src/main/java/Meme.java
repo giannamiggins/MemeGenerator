@@ -8,10 +8,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class meme extends IOException{
-    static meme m = new meme();
-
-    ArrayList<String> memes = new ArrayList<>();
+public class Meme{
+    static Meme m = new Meme();
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
@@ -20,6 +18,7 @@ public class meme extends IOException{
         String[] list = m.loadMemes();
         boolean g = true;
         String name = "";
+        //keeps asking user for the name of a meme until it is found in the folder
         while (g){
             name = s.next();
             if (Arrays.asList(list).contains(name)) {
@@ -36,6 +35,7 @@ public class meme extends IOException{
                 }
             }
         }
+        //asks for and saves the text for the meme
         System.out.print("text for the top of the meme: ");
         String topText = s.next();
         System.out.print("text for the bottom of the meme: ");
@@ -43,17 +43,13 @@ public class meme extends IOException{
 
         System.out.println(topText + "  " + bottomText);
 
+        //trying to show a pop up of the edited meme
         m.showImage(name, topText, bottomText);
 
 
     }
 
-    public void getMemes(){
-        for(int i=0; i< memes.size(); i++){
-            System.out.println(i + ". " + memes.get(i));
-        }
-    }
-
+    //creates a pop-up with the meme template with the provided text added to it
     public void showImage(String name, String top, String bottom){
         JFrame frame = new JFrame();
         ImageIcon icon = new ImageIcon("samples/" + name);
@@ -65,12 +61,13 @@ public class meme extends IOException{
         frame.setVisible(true);
     }
 
+    //looks through the sample folder and prints the names of all the available png files
     public String[] loadMemes(){
         File dir = new File("samples");
         String[] list = (dir.list(
                 new FilenameFilter() {
                     @Override public boolean accept(File dir, String name) {
-                        return name.endsWith(".png"); //change this to .png
+                        return name.endsWith(".png");
                     }
                 }
         ));
