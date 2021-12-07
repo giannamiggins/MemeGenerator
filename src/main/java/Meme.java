@@ -68,10 +68,14 @@ public class Meme{
     }
 
     public void addText(String base, String name, String top, String bottom) throws IOException {
+        Color color = Color.black;
+        if (base.equals("spongebob.png")){
+            color = Color.white;
+        }
         BufferedImage img = ImageIO.read(new File("samples/" + base));
         Graphics g = img.getGraphics();
         g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-        g.setColor(Color.black);
+        g.setColor(color);
         g.drawString(top, 20, 60);
         g.drawString(bottom, 20, img.getHeight()-40);
         g.dispose();
