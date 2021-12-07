@@ -14,44 +14,77 @@ public class Meme{
     public static void main(String[] args) throws IOException {
         Scanner s = new Scanner(System.in);
         Scanner s2 = new Scanner(System.in);
-        System.out.println("Welcome to the meme generator. Here is our list of available memes." +
-                " Which meme would you like to create?");
-        String[] list = m.loadMemes();
-        boolean g = true;
-        String base = "";
-        //keeps asking user for the name of a meme until it is found in the folder
-        while (g){
-            base = s.next();
-            if (Arrays.asList(list).contains(base)) {
-                System.out.println("loading " + base + "...");
-                try
-                {Image picture = ImageIO.read(new File("samples/" + base));}
-                catch (IOException e) {e.printStackTrace();}
-                g = false;
-            }
-            else{
-                System.out.println("Please select a meme from the list:");
-                for(String d: list){
-                    System.out.println(d);
+        System.out.println("Welcome to the meme generator. Would you like to Browse old memes or Create a new one?"+
+                "please type browse or create.");
+        String action = s.next();
+
+        if (action.equals("create")) {
+            System.out.println("Here is our list of available memes." +
+                    " Which meme would you like to create?");
+            String[] list = m.loadMemes();
+            boolean g = true;
+            String base = "";
+            //keeps asking user for the name of a meme until it is found in the folder
+            while (g) {
+                base = s.next();
+                if (Arrays.asList(list).contains(base)) {
+                    System.out.println("loading " + base + "...");
+                    try {
+                        Image picture = ImageIO.read(new File("samples/" + base));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    g = false;
+                } else {
+                    System.out.println("Please select a meme from the list:");
+                    for (String d : list) {
+                        System.out.println(d);
+                    }
                 }
             }
+            //asks for and saves the text for the meme
+            System.out.print("text for the top of the meme: ");
+            s.nextLine();
+            String topText = s.nextLine();
+
+            System.out.print("text for the bottom of the meme: ");
+            String bottomText = s.nextLine();
+
+            System.out.println("what would you like to name your meme? ");
+            String name = s.nextLine();
+
+            //trying to show a pop up of the edited meme
+            //m.showImage(name);
+            m.addText(base, name, topText, bottomText);
+            m.showImage("output/" + name + ".png");
         }
-        //asks for and saves the text for the meme
-        System.out.print("text for the top of the meme: ");
-        s.nextLine();
-        String topText = s.nextLine();
-
-        System.out.print("text for the bottom of the meme: ");
-        String bottomText = s.nextLine();
-
-        System.out.println("what would you like to name your meme? ");
-        String name = s.nextLine();
-
-        //trying to show a pop up of the edited meme
-        //m.showImage(name);
-        m.addText(base, name, topText, bottomText);
-        m.showImage("output/" + name + ".png");
-
+        else{ //if user chooses browse
+            System.out.println("Here is our list of previously made memes." +
+                    " Which meme would you like to view?");
+            String[] list = m.browse();
+            boolean j = true;
+            String base = "";
+            //keeps asking user for the name of a meme until it is found in the folder
+            while (j) {
+                base = s.next();
+                if (Arrays.asList(list).contains(base)) {
+                    System.out.println("loading " + base + "...");
+                    try {
+                        Image picture = ImageIO.read(new File("output/" + base));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    j = false;
+                } else {
+                    System.out.println("Please select a meme from the list:");
+                    for (String d : list) {
+                        System.out.println(d);
+                    }
+                }
+            }
+            //show selected meme to browse
+            m.showImage("output/" + base);
+        }
 
     }
 
@@ -86,6 +119,23 @@ public class Meme{
     //looks through the sample folder and prints the names of all the available png files
     public String[] loadMemes(){
         File dir = new File("samples");
+        String[] list = (dir.list(
+                new FilenameFilter() {
+                    @Override public boolean accept(File dir, String base) {
+                        return base.endsWith(".png");
+                    }
+                }
+        ));
+        assert list != null;
+        for(String l: list){
+            System.out.println(l);
+        }
+        return list;
+    }
+
+    //looks through the output folder and prints the names of all the available png files
+    public String[] browse(){
+        File dir = new File("output");
         String[] list = (dir.list(
                 new FilenameFilter() {
                     @Override public boolean accept(File dir, String base) {
