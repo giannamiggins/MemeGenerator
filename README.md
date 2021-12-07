@@ -2,10 +2,21 @@
  
 This Meme Generator will overlay your custom text on to the most popular backgrounds to get all the laughs from your friends.
 
-## Installation
-
-```bash
-pip install ...
+## Usage
+current build works with the following sample images:
+```
+toystory.png
+lordoftherings.png
+spongebob.png
+successkid.png
+```
+Templates are saved in 
+```
+MemeGenerator/samples
+```
+Created Memes are saved in
+```
+MemeGenerator/output
 ```
 
 ## The team
