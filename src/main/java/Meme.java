@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 public class Meme{
     static Meme m = new Meme();
+    static int textSize = 20;
 
     public static void main(String[] args) throws IOException {
         Scanner s = new Scanner(System.in);
@@ -45,13 +46,26 @@ public class Meme{
                     }
                 }
             }
+            //asks for text size
+            System.out.print("What's your preferred text size? (50 by default): ");
+            s.nextLine();
+            String txtsiz = s.nextLine();
+            int txtSizInt = Integer.parseInt(txtsiz);
+            System.out.println(txtSizInt);
+            textSize = txtSizInt;
+            
+            //asks for font
+            
+                      
             //asks for and saves the text for the meme
             System.out.print("text for the top of the meme: ");
-            s.nextLine();
+           
             String topText = s.nextLine();
 
             System.out.print("text for the bottom of the meme: ");
             String bottomText = s.nextLine();
+            
+           
 
             System.out.println("what would you like to name your meme? ");
             String name = s.nextLine();
@@ -88,7 +102,6 @@ public class Meme{
             //show selected meme to browse
             m.showImage("output/" + base);
         }
-
     }
 
     //creates a pop-up with the meme template with the provided text added to it
@@ -110,13 +123,12 @@ public class Meme{
         }
         BufferedImage img = ImageIO.read(new File("samples/" + base));
         Graphics g = img.getGraphics();
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+        g.setFont(new Font("TimesRoman", Font.PLAIN, textSize));
         g.setColor(color);
         g.drawString(top, 20, 60);
         g.drawString(bottom, 20, img.getHeight()-40);
         g.dispose();
         ImageIO.write(img, "png", new File("output/" + name + ".png"));
-
     }
 
     //looks through the sample folder and prints the names of all the available png files
