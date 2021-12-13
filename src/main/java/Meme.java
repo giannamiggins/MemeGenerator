@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class Meme{
     static Meme m = new Meme();
     static int textSize = 20;
+    static String font = "TimesRoman";
 
     public static void main(String[] args) throws IOException {
         Scanner s = new Scanner(System.in);
@@ -46,20 +47,66 @@ public class Meme{
                     }
                 }
             }
+            
             //asks for text size
-            System.out.print("What's your preferred text size? (50 by default): ");
+            System.out.print("enter your text size: ");
             s.nextLine();
+            
             String txtsiz = s.nextLine();
-            int txtSizInt = Integer.parseInt(txtsiz);
-            System.out.println(txtSizInt);
-            textSize = txtSizInt;
+            
+            try {
+                textSize = Integer.parseInt(txtsiz);
+            } catch (NumberFormatException e) {
+                System.out.println("Input size is not a interger. size 20 is used");
+            }
             
             //asks for font
+            System.out.println("enter number of your preferred font: ");
+            System.out.println("1 Arial");
+            System.out.println("2 Serif");
+            System.out.println("3 TimesRoman");
+            System.out.println("4 Helvetica");
+            System.out.println("5 Dialog");
             
-                      
+            String fontNum = s.nextLine();
+            int fontInt = 1;
+            
+            try {
+            	fontInt = Integer.parseInt(fontNum);
+            } catch (NumberFormatException e) {
+                System.out.println("Input size is invalid, Arial is used");
+            }
+            
+            if (fontInt <= 0 || fontInt > 5) {
+            	System.out.println("Input size is invalid, Arial is used");
+            }
+            
+            switch (fontInt) {
+            case 1:
+            	System.out.println("font Arial is been used");
+            	font = "Arial";
+            	break;
+            case 2:
+            	System.out.println("font Serif is been used");
+            	font = "Serif";
+            	break;
+            case 3:
+            	System.out.println("font TimesRoman is been used");
+            	font = "TimesRoman";
+            	break;
+            case 4:
+            	System.out.println("font Helvetica is been used");
+            	font = "Helvetica";
+            	break;
+            case 5:
+            	System.out.println("font Dialog is been used");
+            	font = "Dialog";
+            	break;            	
+            }
+            
+                
             //asks for and saves the text for the meme
             System.out.print("text for the top of the meme: ");
-           
             String topText = s.nextLine();
 
             System.out.print("text for the bottom of the meme: ");
@@ -123,7 +170,7 @@ public class Meme{
         }
         BufferedImage img = ImageIO.read(new File("samples/" + base));
         Graphics g = img.getGraphics();
-        g.setFont(new Font("TimesRoman", Font.PLAIN, textSize));
+        g.setFont(new Font(font, Font.PLAIN, textSize));
         g.setColor(color);
         g.drawString(top, 20, 60);
         g.drawString(bottom, 20, img.getHeight()-40);
