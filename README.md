@@ -22,6 +22,9 @@ MemeGenerator/output
 ```
 ## To Run
 Clone repo
+```
+git clone https://github.com/giannamiggins/MemeGenerator.git
+```
 
 Run MemeGenerator\src\main\java\Meme.java in an IDE
 
