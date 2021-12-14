@@ -57,7 +57,7 @@ public class Meme{
             try {
                 textSize = Integer.parseInt(txtsiz);
             } catch (NumberFormatException e) {
-                System.out.println("Input size is not a interger. size 20 is used");
+                System.out.println("Input size is not a integer. size 20 is used");
             }
             
             //asks for font
@@ -165,7 +165,7 @@ public class Meme{
 
     public void addText(String base, String name, String top, String bottom) throws IOException {
         Color color = Color.black;
-        if (base.equals("spongebob.png")){
+        if (base.equals("spongebob.png") || base.equals("oprah.png")){
             color = Color.white;
         }
         BufferedImage img = ImageIO.read(new File("samples/" + base));
