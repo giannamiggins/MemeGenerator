@@ -17,8 +17,11 @@ public class Meme{
     static String font = "TimesRoman";
 
     public static void main(String[] args) throws IOException {
+        //Scanners used to interface with the user
         Scanner s = new Scanner(System.in);
         Scanner s2 = new Scanner(System.in);
+
+        //Initial User Message
         System.out.println("Welcome to the meme generator. Would you like to Browse old memes or Create a new one?"+
                 "please type browse or create.");
         String action = s.next();
@@ -27,19 +30,19 @@ public class Meme{
             System.out.println("Here is our list of available memes." +
                     " Which meme would you like to create?");
             String[] list = m.loadMemes();
-            boolean g = true;
+            boolean looper = true;
             String base = "";
-            //keeps asking user for the name of a meme until it is found in the folder
-            while (g) {
+            //Keeps asking user for the name of a meme until it is found in the folder
+            while (looper) {
                 base = s.next();
                 if (Arrays.asList(list).contains(base)) {
                     System.out.println("loading " + base + "...");
                     try {
-                        Image picture = ImageIO.read(new File("samples/" + base));
+                        ImageIO.read(new File("samples/" + base));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    g = false;
+                    looper = false;
                 } else {
                     System.out.println("Please select a meme from the list:");
                     for (String d : list) {
@@ -48,7 +51,7 @@ public class Meme{
                 }
             }
             
-            //asks for text size
+            //Asks for text size
             System.out.print("enter your text size: ");
             s.nextLine();
             
@@ -60,7 +63,7 @@ public class Meme{
                 System.out.println("Input size is not a integer. size 20 is used");
             }
             
-            //asks for font
+            //Asks for font
             System.out.println("enter number of your preferred font: ");
             System.out.println("1 Arial");
             System.out.println("2 Serif");
@@ -105,7 +108,7 @@ public class Meme{
             }
             
                 
-            //asks for and saves the text for the meme
+            //Asks for and saves the text for the meme
             System.out.print("text for the top of the meme: ");
             String topText = s.nextLine();
 
@@ -117,28 +120,29 @@ public class Meme{
             System.out.println("what would you like to name your meme? ");
             String name = s.nextLine();
 
-            //trying to show a pop up of the edited meme
-            //m.showImage(name);
+            //Displays the generated meme with the added text in a pop-out window
             m.addText(base, name, topText, bottomText);
             m.showImage("output/" + name + ".png");
         }
-        else{ //if user chooses browse
+        else{
+            //If user chooses browse
             System.out.println("Here is our list of previously made memes." +
                     " Which meme would you like to view?");
             String[] list = m.browse();
-            boolean j = true;
+            boolean looper2 = true;
             String base = "";
-            //keeps asking user for the name of a meme until it is found in the folder
-            while (j) {
+
+            //Keeps asking user for the name of a meme until it is found in the folder
+            while (looper2) {
                 base = s.next();
                 if (Arrays.asList(list).contains(base)) {
                     System.out.println("loading " + base + "...");
                     try {
-                        Image picture = ImageIO.read(new File("output/" + base));
+                        ImageIO.read(new File("output/" + base));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    j = false;
+                    looper2 = false;
                 } else {
                     System.out.println("Please select a meme from the list:");
                     for (String d : list) {
@@ -146,12 +150,12 @@ public class Meme{
                     }
                 }
             }
-            //show selected meme to browse
+            //Show selected meme to browse
             m.showImage("output/" + base);
         }
     }
 
-    //creates a pop-up with the meme template with the provided text added to it
+    //Creates a pop-up with the meme template with the provided text added to it
     public void showImage(String base){
         JFrame frame = new JFrame();
         ImageIcon icon = new ImageIcon(base);
@@ -163,6 +167,8 @@ public class Meme{
         frame.setVisible(true);
     }
 
+    // Adds text to either the top or bottom (or both) of the image
+    // Different sizes and fonts of texts can be selected if desired
     public void addText(String base, String name, String top, String bottom) throws IOException {
         Color color = Color.black;
         if (base.equals("spongebob.png") || base.equals("oprah.png")){
@@ -178,7 +184,7 @@ public class Meme{
         ImageIO.write(img, "png", new File("output/" + name + ".png"));
     }
 
-    //looks through the sample folder and prints the names of all the available png files
+    //Looks through the sample folder and prints the names of all the available png files
     public String[] loadMemes(){
         File dir = new File("samples");
         String[] list = (dir.list(
@@ -195,7 +201,7 @@ public class Meme{
         return list;
     }
 
-    //looks through the output folder and prints the names of all the available png files
+    //Looks through the output folder and prints the names of all the available png files
     public String[] browse(){
         File dir = new File("output");
         String[] list = (dir.list(
